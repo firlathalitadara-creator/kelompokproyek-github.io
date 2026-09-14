@@ -1,0 +1,1310 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Absensi Berhasil | Student Attendance</title>
+
+    <style>
+
+        /* =====================================
+           RESET
+        ===================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+
+            color: #30213f;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    #ffffff 0%,
+                    transparent 28%
+                ),
+
+                radial-gradient(
+                    circle at 85% 80%,
+                    #d5b6ff 0%,
+                    transparent 30%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #efe4ff,
+                    #d8bfff,
+                    #f4edff
+                );
+
+            background-size: 150% 150%;
+
+            animation: backgroundMove 12s ease-in-out infinite;
+        }
+
+
+        @keyframes backgroundMove {
+
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+
+        }
+
+
+        /* =====================================
+           CARD UTAMA
+        ===================================== */
+
+        .card {
+
+            width: 470px;
+
+            max-width: 100%;
+
+            position: relative;
+
+            padding: 32px;
+
+            border-radius: 32px;
+
+            background: rgba(255, 255, 255, 0.78);
+
+            border: 1px solid rgba(255, 255, 255, 0.9);
+
+            box-shadow:
+                0 25px 70px rgba(84, 48, 126, 0.22),
+
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.9);
+
+            backdrop-filter: blur(20px);
+
+            overflow: hidden;
+
+            animation: cardAppear 0.7s ease;
+        }
+
+
+        @keyframes cardAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(25px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+        }
+
+
+        /* =====================================
+           ORNAMEN BACKGROUND CARD
+        ===================================== */
+
+        .card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 230px;
+            height: 230px;
+
+            border-radius: 50%;
+
+            top: -130px;
+            right: -80px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #c9a1ff,
+                    #a66cff
+                );
+
+            opacity: 0.35;
+
+            filter: blur(2px);
+        }
+
+
+        .card::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            border-radius: 50%;
+
+            bottom: -110px;
+            left: -80px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eadcff,
+                    #bd91ff
+                );
+
+            opacity: 0.35;
+        }
+
+
+        /* =====================================
+           HEADER
+        ===================================== */
+
+        .header {
+
+            position: relative;
+
+            z-index: 2;
+
+            text-align: center;
+        }
+
+
+        .success-icon {
+
+            width: 76px;
+            height: 76px;
+
+            margin: 0 auto;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 50%;
+
+            color: white;
+
+            font-size: 37px;
+
+            font-weight: bold;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #b678ff,
+                    #7434d8
+                );
+
+            box-shadow:
+                0 12px 30px
+                rgba(116, 52, 216, 0.35);
+
+            animation: pop 0.6s ease;
+        }
+
+
+        @keyframes pop {
+
+            0% {
+                transform: scale(0);
+            }
+
+            70% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+
+        }
+
+
+        .header h1 {
+
+            margin-top: 18px;
+
+            font-size: 28px;
+
+            font-weight: 800;
+
+            letter-spacing: -0.5px;
+
+            color: #362246;
+        }
+
+
+        .header p {
+
+            margin-top: 7px;
+
+            color: #887597;
+
+            font-size: 13px;
+        }
+
+
+        /* =====================================
+           PROFILE
+        ===================================== */
+
+        .profile {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .profile-photo {
+
+            width: 125px;
+            height: 125px;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+            padding: 5px;
+
+            background: white;
+
+            border: 3px solid #b98aff;
+
+            box-shadow:
+                0 10px 30px
+                rgba(115, 65, 180, 0.22);
+        }
+
+
+        .profile h2 {
+
+            margin-top: 14px;
+
+            font-size: 21px;
+
+            color: #34223f;
+        }
+
+
+        .active-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            margin-top: 8px;
+
+            padding: 7px 14px;
+
+            border-radius: 50px;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+            color: #7542a8;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f0e4ff,
+                    #dfc6ff
+                );
+
+            border: 1px solid #e0ccfa;
+        }
+
+
+        .active-dot {
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #9b5cff;
+        }
+
+
+        /* =====================================
+           INFORMASI
+        ===================================== */
+
+        .information {
+
+            margin-top: 25px;
+
+            position: relative;
+
+            z-index: 2;
+
+            display: grid;
+
+            gap: 10px;
+        }
+
+
+        .info-box {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 13px 15px;
+
+            border-radius: 17px;
+
+            background:
+                rgba(255, 255, 255, 0.68);
+
+            border: 1px solid
+                rgba(226, 210, 246, 0.8);
+
+            transition: 0.25s ease;
+        }
+
+
+        .info-box:hover {
+
+            transform: translateY(-2px);
+
+            background: white;
+
+            box-shadow:
+                0 8px 20px
+                rgba(116, 67, 163, 0.10);
+        }
+
+
+        .info-icon {
+
+            width: 42px;
+            height: 42px;
+
+            min-width: 42px;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 13px;
+
+            font-size: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eadcff,
+                    #cfadff
+                );
+
+            box-shadow:
+                inset 0 1px 0 white;
+        }
+
+
+        .info-text {
+
+            flex: 1;
+        }
+
+
+        .info-text small {
+
+            display: block;
+
+            margin-bottom: 4px;
+
+            font-size: 9px;
+
+            letter-spacing: 0.8px;
+
+            font-weight: 700;
+
+            color: #a08cab;
+        }
+
+
+        .info-text strong {
+
+            display: block;
+
+            font-size: 14px;
+
+            color: #443052;
+
+            line-height: 1.4;
+        }
+
+
+        .status-hadir {
+
+            color: #8050c2 !important;
+
+            font-weight: 800 !important;
+        }
+
+
+        /* =====================================
+           QR + CATATAN
+        ===================================== */
+
+        .bottom-section {
+
+            margin-top: 22px;
+
+            padding: 15px;
+
+            border-radius: 19px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(247, 239, 255, 0.9),
+                    rgba(232, 213, 255, 0.75)
+                );
+
+            border: 1px solid #e1cff5;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .scan-text {
+
+            max-width: 210px;
+        }
+
+
+        .scan-text strong {
+
+            display: block;
+
+            font-size: 13px;
+
+            color: #5c3976;
+
+            margin-bottom: 5px;
+        }
+
+
+        .scan-text p {
+
+            font-size: 10px;
+
+            line-height: 1.5;
+
+            color: #9a87a8;
+        }
+
+
+        .qr-container {
+
+            text-align: center;
+        }
+
+
+        .qr-container img {
+
+            display: block;
+
+            width: 75px;
+            height: 75px;
+
+            padding: 5px;
+
+            background: white;
+
+            border-radius: 12px;
+
+            border: 2px solid #c8a5ed;
+
+            box-shadow:
+                0 7px 18px
+                rgba(104, 58, 156, 0.13);
+        }
+
+
+        .qr-container span {
+
+            display: block;
+
+            margin-top: 5px;
+
+            font-size: 8px;
+
+            font-weight: bold;
+
+            color: #8866a0;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        /* =====================================
+           TOMBOL
+        ===================================== */
+
+        .biodata-btn {
+
+            width: 100%;
+
+            margin-top: 15px;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 16px;
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #b375ff,
+                    #7735d8
+                );
+
+            box-shadow:
+                0 10px 25px
+                rgba(119, 53, 216, 0.28);
+
+            transition: 0.25s ease;
+
+            position: relative;
+
+            z-index: 3;
+        }
+
+
+        .biodata-btn:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 15px 30px
+                rgba(119, 53, 216, 0.35);
+        }
+
+
+        .biodata-btn:active {
+
+            transform: translateY(0);
+        }
+
+
+        /* =====================================
+           FOOTER
+        ===================================== */
+
+        .footer {
+
+            text-align: center;
+
+            margin-top: 18px;
+
+            padding-top: 15px;
+
+            border-top:
+                1px solid #e9ddf3;
+
+            color: #a697b2;
+
+            font-size: 9px;
+
+            line-height: 1.6;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        /* =====================================
+           HALAMAN BIODATA
+        ===================================== */
+
+        #biodata {
+
+            display: none;
+        }
+
+
+        .biodata-card {
+
+            width: 470px;
+
+            max-width: 100%;
+
+            padding: 32px;
+
+            border-radius: 32px;
+
+            background:
+                rgba(255, 255, 255, 0.82);
+
+            border: 1px solid white;
+
+            box-shadow:
+                0 25px 70px
+                rgba(84, 48, 126, 0.22);
+
+            backdrop-filter: blur(20px);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .biodata-card h1 {
+
+            text-align: center;
+
+            font-size: 25px;
+
+            color: #362246;
+
+            margin-bottom: 23px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .bio-photo {
+
+            display: block;
+
+            width: 120px;
+            height: 120px;
+
+            object-fit: cover;
+
+            margin: auto;
+
+            padding: 5px;
+
+            border-radius: 50%;
+
+            background: white;
+
+            border: 3px solid #b98aff;
+
+            box-shadow:
+                0 10px 25px
+                rgba(115, 65, 180, 0.2);
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .bio-name {
+
+            text-align: center;
+
+            margin-top: 14px;
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            color: #34223f;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .bio-data {
+
+            margin-top: 22px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .bio-data p {
+
+            display: flex;
+
+            padding: 12px 0;
+
+            border-bottom:
+                1px solid #eadff2;
+
+            font-size: 13px;
+
+            color: #443052;
+        }
+
+
+        .bio-data b {
+
+            width: 125px;
+
+            min-width: 125px;
+
+            color: #9986a7;
+        }
+
+
+        .back-btn {
+
+            width: 100%;
+
+            margin-top: 20px;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 15px;
+
+            background: #eee4f7;
+
+            color: #69458b;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+            position: relative;
+
+            z-index: 3;
+        }
+
+
+        .back-btn:hover {
+
+            background: #e2d2f0;
+
+        }
+
+
+        /* =====================================
+           RESPONSIVE HP
+        ===================================== */
+
+        @media (max-width: 520px) {
+
+            body {
+
+                padding: 12px;
+
+            }
+
+
+            .card,
+            .biodata-card {
+
+                padding: 23px;
+
+                border-radius: 25px;
+
+            }
+
+
+            .header h1 {
+
+                font-size: 23px;
+
+            }
+
+
+            .profile-photo {
+
+                width: 105px;
+                height: 105px;
+
+            }
+
+
+            .info-text strong {
+
+                font-size: 12px;
+
+            }
+
+
+            .bottom-section {
+
+                padding: 12px;
+
+            }
+
+
+            .qr-container img {
+
+                width: 68px;
+                height: 68px;
+
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- ==================================================
+         HALAMAN ABSENSI
+    ================================================== -->
+
+    <div class="card" id="absensi">
+
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h1>
+                Absensi Berhasil!
+            </h1>
+
+            <p>
+                Kehadiran kamu berhasil dicatat
+            </p>
+
+        </div>
+
+
+
+        <!-- PROFILE -->
+
+        <div class="profile">
+
+            <img
+                src="img/foto-siswa.jpg"
+                class="profile-photo"
+                alt="Foto Firla">
+
+            <h2>
+                Firla Thalita Dara
+            </h2>
+
+            <div class="active-badge">
+
+                <span class="active-dot"></span>
+
+                SISWA AKTIF
+
+            </div>
+
+        </div>
+
+
+
+        <!-- INFORMASI -->
+
+        <div class="information">
+
+
+            <!-- NOMOR KARTU -->
+
+            <div class="info-box">
+
+                <div class="info-icon">
+                    💳
+                </div>
+
+                <div class="info-text">
+
+                    <small>
+                        NOMOR KARTU
+                    </small>
+
+                    <strong>
+                        20260914001
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- KELAS -->
+
+            <div class="info-box">
+
+                <div class="info-icon">
+                    🏫
+                </div>
+
+                <div class="info-text">
+
+                    <small>
+                        KELAS
+                    </small>
+
+                    <strong>
+                        X PPLG 1
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- JURUSAN -->
+
+            <div class="info-box">
+
+                <div class="info-icon">
+                    💻
+                </div>
+
+                <div class="info-text">
+
+                    <small>
+                        JURUSAN
+                    </small>
+
+                    <strong>
+                        PPLG
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- WAKTU -->
+
+            <div class="info-box">
+
+                <div class="info-icon">
+                    🕐
+                </div>
+
+                <div class="info-text">
+
+                    <small>
+                        WAKTU ABSENSI
+                    </small>
+
+                    <strong>
+                        14 September 2026 • 07:15 WIB
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- STATUS -->
+
+            <div class="info-box">
+
+                <div class="info-icon">
+                    ✓
+                </div>
+
+                <div class="info-text">
+
+                    <small>
+                        STATUS KEHADIRAN
+                    </small>
+
+                    <strong class="status-hadir">
+                        HADIR
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- QR CODE -->
+
+        <div class="bottom-section">
+
+
+            <div class="scan-text">
+
+                <strong>
+                    📱 Scan untuk Biodata
+                </strong>
+
+                <p>
+                    Gunakan kamera HP untuk
+                    melihat informasi siswa.
+                </p>
+
+            </div>
+
+
+            <div class="qr-container">
+
+                <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=Nama%3A%20Firla%20Thalita%20Dara%20%7C%20Nomor%20Kartu%3A%2020260914001%20%7C%20Kelas%3A%20X%20PPLG%201%20%7C%20Jurusan%3A%20PPLG"
+                    alt="QR Biodata">
+
+                <span>
+                    SCAN ME
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- BUTTON -->
+
+        <button
+            class="biodata-btn"
+            onclick="lihatBiodata()">
+
+            Lihat Biodata Siswa →
+
+        </button>
+
+
+
+        <!-- FOOTER -->
+
+        <div class="footer">
+
+            SISTEM ABSENSI SISWA
+
+            <br>
+
+            SMK Nusantara 1
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         HALAMAN BIODATA
+    ================================================== -->
+
+    <div id="biodata">
+
+
+        <div class="biodata-card">
+
+
+            <h1>
+                👤 Biodata Siswa
+            </h1>
+
+
+
+            <img
+                src="img/foto-siswa.jpg"
+                class="bio-photo"
+                alt="Foto Siswa">
+
+
+
+            <div class="bio-name">
+
+                Firla Thalita Dara
+
+            </div>
+
+
+
+            <div class="bio-data">
+
+
+                <p>
+
+                    <b>Nomor Kartu</b>
+
+                    20260914001
+
+                </p>
+
+
+                <p>
+
+                    <b>Kelas</b>
+
+                    X PPLG 1
+
+                </p>
+
+
+                <p>
+
+                    <b>Jurusan</b>
+
+                    PPLG
+
+                </p>
+
+
+                <p>
+
+                    <b>Sekolah</b>
+
+                    SMK Nusantara 1
+
+                </p>
+
+
+                <p>
+
+                    <b>Tempat Lahir</b>
+
+                    Garut
+
+                </p>
+
+
+                <p>
+
+                    <b>Tanggal Lahir</b>
+
+                    09 November 2009
+
+                </p>
+
+
+                <p>
+
+                    <b>Status</b>
+
+                    Siswa Aktif
+
+                </p>
+
+
+                <p>
+
+                    <b>Hobi</b>
+
+                    Mendengarkan musik & menggambar
+
+                </p>
+
+
+            </div>
+
+
+
+            <button
+                class="back-btn"
+                onclick="kembali()">
+
+                ← Kembali ke Absensi
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         JAVASCRIPT
+    ================================================== -->
+
+    <script>
+
+        function lihatBiodata() {
+
+            document.getElementById("absensi").style.display = "none";
+
+            document.getElementById("biodata").style.display = "block";
+
+        }
+
+
+        function kembali() {
+
+            document.getElementById("biodata").style.display = "none";
+
+            document.getElementById("absensi").style.display = "block";
+
+        }
+
+    </script>
+
+
+</body>
+</html>
+```
