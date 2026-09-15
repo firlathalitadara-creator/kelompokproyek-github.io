@@ -1,522 +1,339 @@
 ```html
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Data Absensi Siswa</title>
-
+    <title>Biodata Siswa | Absensi RFID</title>
 
     <style>
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
         }
-
 
         body {
-
-            min-height: 100vh;
-
+            font-family: Arial, sans-serif;
             background:
-                radial-gradient(
-                    circle at 10% 10%,
-                    rgba(255,255,255,.08) 0 70px,
-                    transparent 71px
-                ),
-
-                radial-gradient(
-                    circle at 90% 80%,
-                    rgba(255,255,255,.06) 0 100px,
-                    transparent 101px
-                ),
-
-                linear-gradient(
-                    135deg,
-                    #071b33,
-                    #123b61,
-                    #071b33
-                );
-
+                radial-gradient(circle at 10% 20%, rgba(255,255,255,0.08) 0 70px, transparent 71px),
+                radial-gradient(circle at 90% 80%, rgba(255,255,255,0.07) 0 100px, transparent 101px),
+                linear-gradient(135deg, #071a2f, #12395b, #071a2f);
+            min-height: 100vh;
+            color: #172b3f;
             display: flex;
-
-            align-items: center;
-
             justify-content: center;
-
-            padding: 25px 15px;
-
+            align-items: center;
+            padding: 25px;
         }
-
 
         .card {
-
-            width: 480px;
-
-            max-width: 100%;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #fffdf7,
-                    #f4eee0
-                );
-
-            border-radius: 32px;
-
-            padding: 28px;
-
-            box-shadow:
-                0 25px 60px rgba(0,0,0,.35);
-
+            width: 100%;
+            max-width: 600px;
+            background: #f8f1df;
+            border-radius: 28px;
+            padding: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+            position: relative;
+            overflow: hidden;
         }
 
+        .card::before {
+            content: "";
+            position: absolute;
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            background: rgba(28, 74, 112, 0.08);
+            top: -70px;
+            right: -60px;
+        }
+
+        .card::after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(28, 74, 112, 0.06);
+            bottom: -40px;
+            left: -30px;
+        }
 
         .header {
-
             text-align: center;
-
-            margin-bottom: 22px;
-
+            position: relative;
+            z-index: 2;
         }
 
-
-        .logo {
-
-            width: 65px;
-
-            height: 65px;
-
+        .check {
+            width: 70px;
+            height: 70px;
             margin: auto;
-
-            background: #173b5f;
-
-            border-radius: 20px;
-
+            border-radius: 50%;
+            background: #173e60;
             color: white;
-
+            font-size: 38px;
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
-            font-size: 30px;
-
-            font-weight: bold;
-
+            box-shadow: 0 8px 20px rgba(23,62,96,0.3);
         }
-
 
         h1 {
-
-            color: #173b5f;
-
-            margin-top: 13px;
-
-            font-size: 23px;
-
+            margin-top: 15px;
+            color: #173e60;
+            font-size: 25px;
         }
-
 
         .subtitle {
-
-            color: #7a8792;
-
-            font-size: 12px;
-
-            margin-top: 5px;
-
+            margin-top: 7px;
+            color: #667585;
+            font-size: 14px;
         }
 
+        .badge {
+            display: inline-block;
+            margin-top: 16px;
+            background: #173e60;
+            color: white;
+            padding: 9px 18px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
 
         .profile {
-
-            background: white;
-
-            border-radius: 22px;
-
-            padding: 17px;
-
             display: flex;
-
+            gap: 20px;
             align-items: center;
-
-            gap: 15px;
-
-            box-shadow:
-                0 8px 20px rgba(0,0,0,.08);
-
+            margin-top: 28px;
+            padding: 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 7px 18px rgba(0,0,0,0.08);
+            position: relative;
+            z-index: 2;
         }
 
-
-        .photo {
-
-            width: 80px;
-
-            height: 80px;
-
-            min-width: 80px;
-
-            border-radius: 50%;
-
+        .profile img {
+            width: 100px;
+            height: 125px;
             object-fit: cover;
-
-            border: 4px solid #173b5f;
-
+            border-radius: 15px;
+            border: 4px solid #173e60;
         }
-
 
         .profile h2 {
-
-            color: #173b5f;
-
-            font-size: 17px;
-
-            margin-bottom: 6px;
-
+            color: #173e60;
+            font-size: 20px;
+            margin-bottom: 8px;
         }
-
 
         .profile p {
-
-            color: #7a8792;
-
-            font-size: 11px;
-
-            margin: 3px 0;
-
+            color: #667585;
+            font-size: 13px;
+            margin: 4px 0;
         }
 
-
-        .data {
-
-            display: grid;
-
-            grid-template-columns: 1fr 1fr;
-
-            gap: 10px;
-
-            margin-top: 15px;
-
-        }
-
-
-        .box {
-
+        .info {
+            margin-top: 20px;
             background: white;
-
-            border-radius: 15px;
-
-            padding: 13px;
-
+            border-radius: 20px;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
         }
 
-
-        .box span {
-
-            display: block;
-
-            color: #89939c;
-
-            font-size: 9px;
-
-            margin-bottom: 5px;
-
-        }
-
-
-        .box strong {
-
-            color: #173b5f;
-
-            font-size: 12px;
-
-        }
-
-
-        .status {
-
-            margin-top: 10px;
-
-            background: #173b5f;
-
-            color: white;
-
-            border-radius: 16px;
-
-            padding: 14px;
-
-            text-align: center;
-
-        }
-
-
-        .status span {
-
-            display: block;
-
-            font-size: 9px;
-
-            opacity: .7;
-
-            margin-bottom: 4px;
-
-        }
-
-
-        .status strong {
-
-            font-size: 15px;
-
-        }
-
-
-        .back {
-
-            display: block;
-
-            text-decoration: none;
-
-            text-align: center;
-
-            background: #173b5f;
-
-            color: white;
-
-            padding: 13px;
-
-            border-radius: 50px;
-
-            margin-top: 18px;
-
-            font-size: 12px;
-
+        .info-title {
+            color: #173e60;
             font-weight: bold;
-
+            margin-bottom: 15px;
+            font-size: 16px;
         }
 
+        .row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 10px 0;
+            border-bottom: 1px solid #e7e1d4;
+            font-size: 14px;
+        }
+
+        .row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #7b8792;
+        }
+
+        .value {
+            font-weight: bold;
+            color: #173e60;
+            text-align: right;
+        }
+
+        .hadir {
+            color: #26734d;
+        }
+
+        .button {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background: #173e60;
+            color: white;
+            padding: 14px;
+            border-radius: 14px;
+            margin-top: 22px;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+            transition: 0.2s;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            background: #0e2c47;
+        }
 
         .footer {
-
             text-align: center;
-
-            color: #89939c;
-
-            font-size: 9px;
-
             margin-top: 18px;
-
+            color: #7b8792;
+            font-size: 12px;
+            position: relative;
+            z-index: 2;
         }
 
+        @media (max-width: 500px) {
+            .card {
+                padding: 22px;
+            }
+
+            .profile {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .row {
+                font-size: 13px;
+            }
+        }
     </style>
-
 </head>
-
 
 <body>
 
+    <div class="card">
 
-<div class="card">
+        <div class="header">
+            <div class="check">✓</div>
 
+            <h1>Kartu Berhasil di-Tap!</h1>
 
-    <div class="header">
-
-        <div class="logo">
-            ✓
-        </div>
-
-
-        <h1>
-            Data Absensi Siswa
-        </h1>
-
-
-        <p class="subtitle">
-            Data berhasil dibaca dari QR
-        </p>
-
-    </div>
-
-
-    <!-- FOTO + NAMA -->
-
-    <div class="profile">
-
-        <img
-            src="img/foto-siswa.jpg"
-            class="photo"
-            alt="Foto Siswa"
-        >
-
-
-        <div>
-
-            <h2 id="nama">
-                -
-            </h2>
-
-
-            <p>
-                <b>No. Kartu:</b>
-                <span id="kartu">-</span>
+            <p class="subtitle">
+                Data absensi siswa berhasil ditemukan
             </p>
 
+            <div class="badge">
+                ✓ ABSENSI BERHASIL
+            </div>
+        </div>
 
-            <p>
-                <b>Kelas:</b>
-                <span id="kelas">-</span>
-            </p>
+        <div class="profile">
+            <img src="img/foto-siswa.jpg" alt="Foto Siswa">
 
+            <div>
+                <h2 id="nama">Firla Thalita Dara</h2>
+
+                <p>
+                    <b>Kelas:</b>
+                    <span id="kelas">XI RPL</span>
+                </p>
+
+                <p>
+                    <b>Jurusan:</b>
+                    <span id="jurusan">RPL</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="info">
+
+            <div class="info-title">
+                📋 Informasi Absensi
+            </div>
+
+            <div class="row">
+                <span class="label">Nomor Kartu</span>
+                <span class="value" id="kartu">20260914001</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Nomor Urut</span>
+                <span class="value" id="urut">01</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Tanggal</span>
+                <span class="value" id="tanggal">-</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Waktu Tap</span>
+                <span class="value" id="waktu">-</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Status</span>
+                <span class="value hadir" id="status">HADIR</span>
+            </div>
+
+        </div>
+
+        <a href="index.html" class="button">
+            ← Kembali ke Halaman Tap
+        </a>
+
+        <div class="footer">
+            Sistem Absensi RFID • SMK Nusantara 1
         </div>
 
     </div>
 
+    <script>
+        const params = new URLSearchParams(window.location.search);
 
-    <!-- DATA -->
+        document.getElementById("nama").textContent =
+            params.get("nama") || "Firla Thalita Dara";
 
-    <div class="data">
+        document.getElementById("kartu").textContent =
+            params.get("kartu") || "20260914001";
 
-        <div class="box">
+        document.getElementById("kelas").textContent =
+            params.get("kelas") || "XI RPL";
 
-            <span>
-                JURUSAN
-            </span>
+        document.getElementById("jurusan").textContent =
+            params.get("jurusan") || "RPL";
 
-            <strong id="jurusan">
-                -
-            </strong>
+        document.getElementById("urut").textContent =
+            params.get("urut") || "01";
 
-        </div>
+        document.getElementById("tanggal").textContent =
+            params.get("tanggal") || "-";
 
+        document.getElementById("waktu").textContent =
+            params.get("waktu") || "-";
 
-        <div class="box">
-
-            <span>
-                NO. URUT
-            </span>
-
-            <strong id="urut">
-                -
-            </strong>
-
-        </div>
-
-
-        <div class="box">
-
-            <span>
-                TANGGAL
-            </span>
-
-            <strong id="tanggal">
-                -
-            </strong>
-
-        </div>
-
-
-        <div class="box">
-
-            <span>
-                JAM TAP
-            </span>
-
-            <strong id="waktu">
-                -
-            </strong>
-
-        </div>
-
-    </div>
-
-
-    <!-- STATUS -->
-
-    <div class="status">
-
-        <span>
-            STATUS KEHADIRAN
-        </span>
-
-        <strong id="status">
-            ✓ HADIR
-        </strong>
-
-    </div>
-
-
-    <a
-        href="index.html"
-        class="back"
-    >
-        Kembali ke Absensi
-    </a>
-
-
-    <div class="footer">
-        Sistem Absensi RFID • XI RPL
-    </div>
-
-
-</div>
-
-
-<script>
-
-    // Ambil data dari QR
-    const params =
-        new URLSearchParams(
-            window.location.search
-        );
-
-
-    document.getElementById("nama").textContent =
-        params.get("nama") || "-";
-
-
-    document.getElementById("kartu").textContent =
-        params.get("kartu") || "-";
-
-
-    document.getElementById("kelas").textContent =
-        params.get("kelas") || "-";
-
-
-    document.getElementById("jurusan").textContent =
-        params.get("jurusan") || "-";
-
-
-    document.getElementById("urut").textContent =
-        params.get("urut") || "-";
-
-
-    document.getElementById("tanggal").textContent =
-        params.get("tanggal") || "-";
-
-
-    document.getElementById("waktu").textContent =
-        params.get("waktu") || "-";
-
-
-    document.getElementById("status").textContent =
-        "✓ " +
-        (params.get("status") || "HADIR");
-
-</script>
-
+        document.getElementById("status").textContent =
+            params.get("status") || "HADIR";
+    </script>
 
 </body>
-
 </html>
 ```
